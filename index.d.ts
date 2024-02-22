@@ -1,88 +1,63 @@
-/**
- * License for programmatically and manually incorporated
- * documentation aka. `JSDoc` from https://github.com/nodejs/node/tree/master/doc
- *
- * Copyright Node.js contributors. All rights reserved.
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- */
+import Dispatcher from'./dispatcher'
+import { setGlobalDispatcher, getGlobalDispatcher } from './global-dispatcher'
+import { setGlobalOrigin, getGlobalOrigin } from './global-origin'
+import Pool from'./pool'
+import { RedirectHandler, DecoratorHandler } from './handlers'
 
-// NOTE: These definitions support NodeJS and TypeScript 4.9+.
+import BalancedPool from './balanced-pool'
+import Client from'./client'
+import buildConnector from'./connector'
+import errors from'./errors'
+import Agent from'./agent'
+import MockClient from'./mock-client'
+import MockPool from'./mock-pool'
+import MockAgent from'./mock-agent'
+import mockErrors from'./mock-errors'
+import ProxyAgent from'./proxy-agent'
+import { request, pipeline, stream, connect, upgrade } from './api'
 
-// Reference required types from the default lib:
-/// <reference lib="es2020" />
-/// <reference lib="esnext.asynciterable" />
-/// <reference lib="esnext.intl" />
-/// <reference lib="esnext.bigint" />
+export * from './cookies'
+export * from './fetch'
+export * from './file'
+export * from './filereader'
+export * from './formdata'
+export * from './diagnostics-channel'
+export * from './websocket'
+export * from './content-type'
+export * from './cache'
+export { Interceptable } from './mock-interceptor'
 
-// Base definitions for all NodeJS modules that are not specific to any version of TypeScript:
-/// <reference path="assert.d.ts" />
-/// <reference path="assert/strict.d.ts" />
-/// <reference path="globals.d.ts" />
-/// <reference path="async_hooks.d.ts" />
-/// <reference path="buffer.d.ts" />
-/// <reference path="child_process.d.ts" />
-/// <reference path="cluster.d.ts" />
-/// <reference path="console.d.ts" />
-/// <reference path="constants.d.ts" />
-/// <reference path="crypto.d.ts" />
-/// <reference path="dgram.d.ts" />
-/// <reference path="diagnostics_channel.d.ts" />
-/// <reference path="dns.d.ts" />
-/// <reference path="dns/promises.d.ts" />
-/// <reference path="dns/promises.d.ts" />
-/// <reference path="domain.d.ts" />
-/// <reference path="dom-events.d.ts" />
-/// <reference path="events.d.ts" />
-/// <reference path="fs.d.ts" />
-/// <reference path="fs/promises.d.ts" />
-/// <reference path="http.d.ts" />
-/// <reference path="http2.d.ts" />
-/// <reference path="https.d.ts" />
-/// <reference path="inspector.d.ts" />
-/// <reference path="module.d.ts" />
-/// <reference path="net.d.ts" />
-/// <reference path="os.d.ts" />
-/// <reference path="path.d.ts" />
-/// <reference path="perf_hooks.d.ts" />
-/// <reference path="process.d.ts" />
-/// <reference path="punycode.d.ts" />
-/// <reference path="querystring.d.ts" />
-/// <reference path="readline.d.ts" />
-/// <reference path="readline/promises.d.ts" />
-/// <reference path="repl.d.ts" />
-/// <reference path="stream.d.ts" />
-/// <reference path="stream/promises.d.ts" />
-/// <reference path="stream/consumers.d.ts" />
-/// <reference path="stream/web.d.ts" />
-/// <reference path="string_decoder.d.ts" />
-/// <reference path="test.d.ts" />
-/// <reference path="timers.d.ts" />
-/// <reference path="timers/promises.d.ts" />
-/// <reference path="tls.d.ts" />
-/// <reference path="trace_events.d.ts" />
-/// <reference path="tty.d.ts" />
-/// <reference path="url.d.ts" />
-/// <reference path="util.d.ts" />
-/// <reference path="v8.d.ts" />
-/// <reference path="vm.d.ts" />
-/// <reference path="wasi.d.ts" />
-/// <reference path="worker_threads.d.ts" />
-/// <reference path="zlib.d.ts" />
+export { Dispatcher, BalancedPool, Pool, Client, buildConnector, errors, Agent, request, stream, pipeline, connect, upgrade, setGlobalDispatcher, getGlobalDispatcher, setGlobalOrigin, getGlobalOrigin, MockClient, MockPool, MockAgent, mockErrors, ProxyAgent, RedirectHandler, DecoratorHandler }
+export default Undici
 
-/// <reference path="globals.global.d.ts" />
+declare namespace Undici {
+  var Dispatcher: typeof import('./dispatcher').default
+  var Pool: typeof import('./pool').default;
+  var RedirectHandler: typeof import ('./handlers').RedirectHandler
+  var DecoratorHandler: typeof import ('./handlers').DecoratorHandler
+  var createRedirectInterceptor: typeof import ('./interceptors').createRedirectInterceptor
+  var BalancedPool: typeof import('./balanced-pool').default;
+  var Client: typeof import('./client').default;
+  var buildConnector: typeof import('./connector').default;
+  var errors: typeof import('./errors').default;
+  var Agent: typeof import('./agent').default;
+  var setGlobalDispatcher: typeof import('./global-dispatcher').setGlobalDispatcher;
+  var getGlobalDispatcher: typeof import('./global-dispatcher').getGlobalDispatcher;
+  var request: typeof import('./api').request;
+  var stream: typeof import('./api').stream;
+  var pipeline: typeof import('./api').pipeline;
+  var connect: typeof import('./api').connect;
+  var upgrade: typeof import('./api').upgrade;
+  var MockClient: typeof import('./mock-client').default;
+  var MockPool: typeof import('./mock-pool').default;
+  var MockAgent: typeof import('./mock-agent').default;
+  var mockErrors: typeof import('./mock-errors').default;
+  var fetch: typeof import('./fetch').fetch;
+  var Headers: typeof import('./fetch').Headers;
+  var Response: typeof import('./fetch').Response;
+  var Request: typeof import('./fetch').Request;
+  var FormData: typeof import('./formdata').FormData;
+  var File: typeof import('./file').File;
+  var FileReader: typeof import('./filereader').FileReader;
+  var caches: typeof import('./cache').caches;
+}
